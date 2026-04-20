@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MerebSira – Job Hunting Network</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --navy:#1a2e4a;
+    --dark-blue:#0f1e33;
+    --mid-blue:#1e3a5f;
+    --gold:#c9a44a;
+    --gold-light:#e0b96a;
+    --white:#ffffff;
+    --light-gray:#f5f7fa;
+    --text-gray:#5a6a7e;
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:'Segoe UI',sans-serif;color:var(--navy);background:var(--white);}
+
+  /* NAV */
+  nav{background:var(--dark-blue);position:sticky;top:0;z-index:100;padding:0 5%;}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .logo-icon{width:42px;height:42px;}
+  .logo-text{color:var(--white);font-size:1.35rem;font-weight:700;letter-spacing:.5px;}
+  .logo-text span{color:var(--gold);}
+  .logo-sub{color:#8aa0bc;font-size:.7rem;display:block;font-weight:400;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:#c8d8e8;text-decoration:none;font-size:.9rem;transition:color .2s;}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-cta{background:var(--gold);color:var(--dark-blue)!important;padding:8px 20px;border-radius:6px;font-weight:600!important;}
+  .nav-cta:hover{background:var(--gold-light)!important;color:var(--dark-blue)!important;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;}
+  .hamburger span{width:24px;height:2px;background:var(--white);border-radius:2px;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--dark-blue) 0%,var(--mid-blue) 60%,#1a3d6e 100%);
+    padding:90px 5% 80px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;
+    background:radial-gradient(circle,rgba(201,164,74,.15),transparent 70%);border-radius:50%;}
+  .hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(201,164,74,.1),transparent 70%);border-radius:50%;}
+  .hero-badge{display:inline-block;background:rgba(201,164,74,.15);border:1px solid rgba(201,164,74,.4);
+    color:var(--gold-light);padding:6px 18px;border-radius:20px;font-size:.82rem;margin-bottom:24px;letter-spacing:.5px;}
+  .hero h1{font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:800;line-height:1.25;margin-bottom:18px;}
+  .hero h1 span{color:var(--gold);}
+  .hero p{color:#a8c0d8;font-size:1.05rem;max-width:600px;margin:0 auto 36px;line-height:1.7;}
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:var(--gold);color:var(--dark-blue);padding:14px 32px;border-radius:8px;
+    font-weight:700;text-decoration:none;font-size:1rem;transition:all .2s;}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,164,74,.4);}
+  .btn-outline{border:2px solid rgba(255,255,255,.3);color:var(--white);padding:14px 32px;border-radius:8px;
+    font-weight:600;text-decoration:none;font-size:1rem;transition:all .2s;}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .hero-stats{display:flex;justify-content:center;gap:48px;margin-top:60px;flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-size:1.8rem;font-weight:800;color:var(--gold);}
+  .stat-label{color:#8aa0bc;font-size:.82rem;margin-top:4px;}
+
+  /* SECTION COMMON */
+  section{padding:80px 5%;}
+  .section-tag{color:var(--gold);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+  .section-title{font-size:clamp(1.5rem,3vw,2.1rem);color:var(--dark-blue);font-weight:800;margin-bottom:14px;}
+  .section-sub{color:var(--text-gray);font-size:1rem;line-height:1.7;max-width:560px;}
+  .centered{text-align:center;}
+  .centered .section-sub{margin:0 auto;}
+
+  /* ABOUT */
+  .about{background:var(--light-gray);}
+  .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto;}
+  .about-visual{background:linear-gradient(135deg,var(--dark-blue),var(--mid-blue));border-radius:16px;
+    padding:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;}
+  .about-icon-wrap{width:90px;height:90px;background:rgba(201,164,74,.2);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+  .about-visual h3{color:var(--white);font-size:1.3rem;font-weight:700;text-align:center;margin-bottom:10px;}
+  .about-visual p{color:#8aa0bc;font-size:.9rem;text-align:center;line-height:1.6;}
+  .about-content{padding:10px 0;}
+  .about-content .section-sub{max-width:100%;}
+  .about-highlights{display:flex;flex-direction:column;gap:14px;margin-top:28px;}
+  .highlight{display:flex;align-items:flex-start;gap:14px;}
+  .h-dot{width:10px;height:10px;background:var(--gold);border-radius:50%;margin-top:5px;flex-shrink:0;}
+  .h-text{color:var(--text-gray);font-size:.95rem;line-height:1.6;}
+  .h-text strong{color:var(--navy);}
+
+  /* HOW IT WORKS */
+  .how{background:var(--white);}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:50px;max-width:1000px;margin-left:auto;margin-right:auto;}
+  .step{text-align:center;padding:36px 24px;border-radius:14px;border:1px solid #e0e8f0;transition:all .3s;position:relative;}
+  .step:hover{border-color:var(--gold);box-shadow:0 12px 32px rgba(26,46,74,.08);transform:translateY(-4px);}
+  .step-num{width:52px;height:52px;background:var(--gold);color:var(--dark-blue);font-weight:800;font-size:1.2rem;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+  .step-icon{font-size:2rem;margin-bottom:14px;}
+  .step h3{font-size:1.05rem;font-weight:700;color:var(--dark-blue);margin-bottom:10px;}
+  .step p{color:var(--text-gray);font-size:.9rem;line-height:1.6;}
+  .step-connector{display:none;}
+
+  /* SERVICES */
+  .services{background:var(--light-gray);}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+  .service-card{background:var(--white);border-radius:14px;padding:32px 24px;border-top:4px solid transparent;
+    transition:all .3s;box-shadow:0 2px 12px rgba(26,46,74,.05);}
+  .service-card:hover{border-top-color:var(--gold);box-shadow:0 12px 32px rgba(26,46,74,.1);}
+  .sc-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--dark-blue),var(--mid-blue));border-radius:12px;
+    display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px;}
+  .service-card h3{font-size:1rem;font-weight:700;color:var(--dark-blue);margin-bottom:10px;}
+  .service-card p{color:var(--text-gray);font-size:.88rem;line-height:1.65;}
+
+  /* WHY US */
+  .why{background:linear-gradient(135deg,var(--dark-blue),var(--mid-blue));padding:80px 5%;}
+  .why .section-title{color:var(--white);}
+  .why .section-tag{color:var(--gold-light);}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px;}
+  .why-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;
+    padding:28px 20px;text-align:center;transition:all .3s;}
+  .why-card:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);}
+  .why-num{font-size:2rem;font-weight:800;color:var(--gold);margin-bottom:10px;}
+  .why-card h4{color:var(--white);font-size:.95rem;font-weight:700;margin-bottom:8px;}
+  .why-card p{color:#8aa0bc;font-size:.85rem;line-height:1.6;}
+
+  /* TESTIMONIALS */
+  .testimonials{background:var(--white);}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+  .testi-card{background:var(--light-gray);border-radius:14px;padding:28px;border-left:4px solid var(--gold);}
+  .testi-text{color:var(--text-gray);font-size:.92rem;line-height:1.7;margin-bottom:20px;font-style:italic;}
+  .testi-author{display:flex;align-items:center;gap:12px;}
+  .testi-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--dark-blue),var(--mid-blue));
+    display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.95rem;}
+  .testi-name{font-weight:700;color:var(--dark-blue);font-size:.9rem;}
+  .testi-loc{color:var(--text-gray);font-size:.8rem;}
+  .stars{color:var(--gold);font-size:.9rem;margin-bottom:12px;}
+
+  /* CONTACT */
+  .contact{background:var(--light-gray);}
+  .contact-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;max-width:1100px;margin:0 auto;align-items:start;}
+  .contact-info{padding-top:10px;}
+  .contact-info .section-sub{max-width:100%;margin-bottom:36px;}
+  .info-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;}
+  .info-icon{width:44px;height:44px;background:var(--dark-blue);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .info-label{font-weight:700;color:var(--dark-blue);font-size:.9rem;margin-bottom:3px;}
+  .info-val{color:var(--text-gray);font-size:.88rem;}
+  .social-links{display:flex;gap:12px;margin-top:10px;}
+  .soc{width:40px;height:40px;background:var(--dark-blue);border-radius:8px;display:flex;align-items:center;
+    justify-content:center;text-decoration:none;font-size:1rem;color:var(--white);transition:background .2s;}
+  .soc:hover{background:var(--gold);}
+  .contact-form{background:var(--white);border-radius:16px;padding:40px;box-shadow:0 4px 24px rgba(26,46,74,.08);}
+  .contact-form h3{font-size:1.2rem;font-weight:700;color:var(--dark-blue);margin-bottom:24px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-group{margin-bottom:18px;}
+  .form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:6px;}
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:11px 14px;border:1.5px solid #dce5ef;border-radius:8px;font-size:.9rem;
+    color:var(--navy);background:var(--white);outline:none;transition:border .2s;font-family:inherit;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--mid-blue);}
+  .form-group textarea{resize:vertical;min-height:110px;}
+  .submit-btn{width:100%;background:var(--gold);color:var(--dark-blue);border:none;padding:14px;border-radius:8px;
+    font-weight:700;font-size:1rem;cursor:pointer;transition:all .2s;}
+  .submit-btn:hover{background:var(--gold-light);transform:translateY(-2px);}
+  .success-msg{display:none;background:#d4edda;color:#155724;padding:12px 16px;border-radius:8px;
+    margin-top:14px;font-size:.9rem;text-align:center;}
+
+  /* FOOTER */
+  footer{background:var(--dark-blue);padding:50px 5% 28px;}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+  .footer-brand .logo-text{font-size:1.2rem;}
+  .footer-brand p{color:#6a8099;font-size:.88rem;line-height:1.7;margin-top:12px;max-width:280px;}
+  .footer-col h4{color:var(--white);font-size:.95rem;font-weight:700;margin-bottom:16px;}
+  .footer-col ul{list-style:none;}
+  .footer-col ul li{margin-bottom:10px;}
+  .footer-col ul li a{color:#6a8099;text-decoration:none;font-size:.88rem;transition:color .2s;}
+  .footer-col ul li a:hover{color:var(--gold);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;
+    justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .footer-bottom p{color:#4a6278;font-size:.82rem;}
+  .footer-bottom span{color:var(--gold);}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .about-inner,.contact-inner{grid-template-columns:1fr;}
+    .steps,.services-grid,.why-grid,.testi-grid{grid-template-columns:1fr 1fr;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:640px){
+    .nav-links{display:none;flex-direction:column;position:absolute;top:70px;left:0;right:0;
+      background:var(--dark-blue);padding:20px 5%;gap:16px;border-top:1px solid rgba(255,255,255,.1);}
+    .nav-links.open{display:flex;}
+    .hamburger{display:flex;}
+    .steps,.services-grid,.why-grid,.testi-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;}
+    .hero-stats{gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="14" stroke="#c9a44a" stroke-width="3"/>
+        <circle cx="18" cy="15" r="5" fill="#1e3a5f"/>
+        <path d="M10 26c0-4 3.6-7 8-7s8 3 8 7" fill="#1e3a5f"/>
+        <line x1="28" y1="28" x2="38" y2="38" stroke="#c9a44a" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <span class="logo-text">Mereb<span>Sira</span></span>
+        <span class="logo-sub">Job Hunting Network</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#testimonials">Stories</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🌍 Serving the Habesha Diaspora Worldwide</div>
+  <h1>Your Career Journey<br/>Starts with <span>MerebSira</span></h1>
+  <p>We help Habesha professionals living abroad land their dream jobs — with expert resume building and dedicated job searching across multiple platforms.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Get Started Today</a>
+    <a href="#how" class="btn-outline">How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Jobs Secured</div></div>
+    <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Countries Served</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Client Satisfaction</div></div>
+    <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Experience</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-icon-wrap">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="18" r="7" fill="#c9a44a"/>
+          <path d="M8 38c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="#c9a44a" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Built for the Habesha Community</h3>
+      <p>We understand your journey — your culture, your ambitions, and the unique challenges of building a career abroad.</p>
+    </div>
+    <div class="about-content">
+      <div class="section-tag">About MerebSira</div>
+      <h2 class="section-title">We Are Your Career Partners in the Diaspora</h2>
+      <p class="section-sub">MerebSira (መረብ ሲራ) was founded with one mission: to empower Habesha professionals living abroad to unlock their full career potential. We combine deep cultural understanding with professional expertise.</p>
+      <div class="about-highlights">
+        <div class="highlight"><div class="h-dot"></div><p class="h-text"><strong>We listen first.</strong> You share your background, experience, and goals — we take it from there.</p></div>
+        <div class="highlight"><div class="h-dot"></div><p class="h-text"><strong>Expert resume writers</strong> who understand both the Habesha professional journey and international job markets.</p></div>
+        <div class="highlight"><div class="h-dot"></div><p class="h-text"><strong>We search everywhere</strong> — LinkedIn, Indeed, Glassdoor, local job boards and industry-specific platforms.</p></div>
+        <div class="highlight"><div class="h-dot"></div><p class="h-text"><strong>Community-driven.</strong> When you succeed, our whole community grows stronger.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="centered">
+    <div class="section-tag">The Process</div>
+    <h2 class="section-title">How MerebSira Works</h2>
+    <p class="section-sub">A simple 3-step process designed to get you hired — fast, professionally, and stress-free.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-icon">📋</div>
+      <h3>Share Your Details</h3>
+      <p>Fill out our contact form or reach out directly. Tell us your skills, work history, education, and the kind of job you're looking for.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-icon">✍️</div>
+      <h3>We Build Your Resume</h3>
+      <p>Our experienced team crafts a polished, ATS-optimized resume tailored to your industry and target country's standards.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-icon">🔍</div>
+      <h3>We Find Your Job</h3>
+      <p>We search multiple job platforms on your behalf — matching your profile with the best opportunities available right now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="centered">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Everything you need to go from job-seeker to hired — all in one place.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="sc-icon">📄</div>
+      <h3>Professional Resume Building</h3>
+      <p>We craft compelling, ATS-friendly resumes that highlight your strengths and make recruiters take notice — tailored to your target industry.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🌐</div>
+      <h3>Multi-Platform Job Search</h3>
+      <p>We search LinkedIn, Indeed, Glassdoor, ZipRecruiter, and many more platforms to find the best opportunities that match your profile.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">💼</div>
+      <h3>Career Consultation</h3>
+      <p>One-on-one guidance to help you navigate the job market abroad — from industry advice to application strategy.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🔗</div>
+      <h3>LinkedIn Profile Optimization</h3>
+      <p>We transform your LinkedIn into a powerful personal brand that attracts recruiters and opens doors to hidden opportunities.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">✉️</div>
+      <h3>Cover Letter Writing</h3>
+      <p>Personalized, compelling cover letters for each application — making sure your story is told the right way.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🎯</div>
+      <h3>Interview Preparation</h3>
+      <p>Mock interviews, common question coaching, and cultural tips to make sure you walk in confident and walk out with an offer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="centered">
+    <div class="section-tag">Why MerebSira</div>
+    <h2 class="section-title">Why the Community Trusts Us</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">🤝</div>
+      <h4>Community First</h4>
+      <p>We are Habesha. We understand your background, your culture, and your goals on a personal level.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">⭐</div>
+      <h4>Proven Expertise</h4>
+      <p>Years of experience helping diaspora professionals land jobs in the US, Europe, Canada, and beyond.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">🚀</div>
+      <h4>End-to-End Support</h4>
+      <p>From the first conversation to the job offer — we are with you every step of the way.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">🌍</div>
+      <h4>Global Reach</h4>
+      <p>We serve the Habesha diaspora across 12+ countries, with deep knowledge of each local job market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="centered">
+    <div class="section-tag">Success Stories</div>
+    <h2 class="section-title">What Our Community Says</h2>
+    <p class="section-sub">Real stories from Habesha professionals who found their path with MerebSira.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"I had been applying for months with no luck. MerebSira rebuilt my resume and within 3 weeks I had two interviews and a job offer in IT. Absolutely life-changing!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">BT</div>
+        <div><div class="testi-name">Bereket T.</div><div class="testi-loc">Washington D.C., USA 🇺🇸</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"The team really understands what it means to be Habesha abroad. They helped me highlight my experience in a way that made sense for the Canadian market. Got hired in 6 weeks!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SA</div>
+        <div><div class="testi-name">Selam A.</div><div class="testi-loc">Toronto, Canada 🇨🇦</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"MerebSira is not just a service — they are family. They went above and beyond to search for jobs that matched exactly what I was looking for in Germany. Highly recommend!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">DM</div>
+        <div><div class="testi-name">Dawit M.</div><div class="testi-loc">Berlin, Germany 🇩🇪</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Ready to Start Your Journey?</h2>
+      <p class="section-sub">Reach out to us today. Share your details and let MerebSira take care of the rest — from resume to job offer.</p>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div><div class="info-label">Email Us</div><div class="info-val">info@merebsira.com</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📱</div>
+        <div><div class="info-label">WhatsApp / Phone</div><div class="info-val">Available on request</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌍</div>
+        <div><div class="info-label">We Serve</div><div class="info-val">Habesha diaspora worldwide</div></div>
+      </div>
+      <div class="social-links">
+        <a href="#" class="soc" title="LinkedIn">in</a>
+        <a href="#" class="soc" title="Telegram">✈</a>
+        <a href="#" class="soc" title="Facebook">f</a>
+        <a href="#" class="soc" title="Instagram">📷</a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="fname" placeholder="e.g. Selam"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="lname" placeholder="e.g. Tadesse"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="email" placeholder="your@email.com"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Country of Residence</label>
+          <select id="country">
+            <option value="">Select country...</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Germany</option>
+            <option>Sweden</option>
+            <option>Norway</option>
+            <option>Australia</option>
+            <option>Netherlands</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Current Occupation</label>
+          <input type="text" id="job" placeholder="e.g. Software Engineer"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Resume Building</option>
+          <option>Job Search</option>
+          <option>LinkedIn Optimization</option>
+          <option>Cover Letter Writing</option>
+          <option>Career Consultation</option>
+          <option>Interview Preparation</option>
+          <option>All of the above</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Your Message *</label>
+        <textarea id="message" placeholder="Tell us about your background, goals, and how we can help you..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">Send Message →</button>
+      <div class="success-msg" id="successMsg">✅ Thank you! We will get back to you within 24 hours.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <svg width="34" height="34" viewBox="0 0 42 42" fill="none">
+          <circle cx="18" cy="18" r="14" stroke="#c9a44a" stroke-width="3"/>
+          <circle cx="18" cy="15" r="5" fill="#1e3a5f"/>
+          <path d="M10 26c0-4 3.6-7 8-7s8 3 8 7" fill="#1e3a5f"/>
+          <line x1="28" y1="28" x2="38" y2="38" stroke="#c9a44a" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <span class="logo-text">Mereb<span>Sira</span></span>
+          <span class="logo-sub">Job Hunting Network</span>
+        </div>
+      </a>
+      <p>Empowering the Habesha diaspora to build meaningful careers abroad — one resume, one job, one success story at a time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Success Stories</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Resume Building</a></li>
+        <li><a href="#services">Job Search</a></li>
+        <li><a href="#services">LinkedIn Optimization</a></li>
+        <li><a href="#services">Cover Letters</a></li>
+        <li><a href="#services">Interview Prep</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>MerebSira</span> Job Hunting Network. All rights reserved.</p>
+    <p>Made with ❤️ for the <span>Habesha</span> community worldwide</p>
+  </div>
+</footer>
+
+<script>
+function submitForm(){
+  const f=document.getElementById('fname').value.trim();
+  const e=document.getElementById('email').value.trim();
+  const m=document.getElementById('message').value.trim();
+  if(!f||!e||!m){alert('Please fill in the required fields (Name, Email, Message).');return;}
+  if(!/\S+@\S+\.\S+/.test(e)){alert('Please enter a valid email address.');return;}
+  document.getElementById('successMsg').style.display='block';
+  document.getElementById('fname').value='';
+  document.getElementById('lname').value='';
+  document.getElementById('email').value='';
+  document.getElementById('country').value='';
+  document.getElementById('job').value='';
+  document.getElementById('service').value='';
+  document.getElementById('message').value='';
+  setTimeout(()=>document.getElementById('successMsg').style.display='none',5000);
+}
+</script>
+</body>
+</html>
